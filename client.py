@@ -2,6 +2,16 @@
 import socket
 import threading
 
+import tkinter as tk
+import tkinter.ttk as ttk
+
+class Window:
+    def __init__(self, master):
+        
+        pass
+
+
+
 HOST = "127.0.0.1"
 PORT = 1234
 
@@ -58,6 +68,12 @@ def main():
         print(f"Unable to connect to {HOST}:{PORT}")
 
     chat_to_server(client)
+
+root = tk.Tk()
+root.title("Chat")
+root.geometry("500x500")
+window = Window(root)
+root.mainloop()
 
 if __name__ == "__main__":
     main()
