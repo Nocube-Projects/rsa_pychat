@@ -36,6 +36,8 @@ def handle_client(client):
         # New user
         if username != "":
             connections.append((username, client))
+            prompt_message = "SERVER~" + f"{username} has joined the chat"
+            broadcast(prompt_message)
             break
 
         else:
