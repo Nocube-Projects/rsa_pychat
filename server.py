@@ -2,69 +2,81 @@
 import socket
 import threading
 
-HOST = "127.0.0.1"
-PORT = 1234
-
-connections = []
-
-def listening(client, username):
-    
-    while True:
-        message = client.recv(2048).decode("utf-8")#
-
-        if message != "":
-            final_msg = username + "~" + message
-            broadcast(final_msg)
-
-        else:
-            print(f"Message recieved from {username} is empty")
+# Server processing class
+class process:
+    def __init__(self):
+        self.HOST = "127.0.0.1"
+        self.PORT = 1234
         
-def direct_message(client, message):
+        # DB details
+        self.DB_HOST = "localhost"
+        self.DB = "rsa_pychat"
+        self.DB_USER = "rsa_pychat"
+        self.DB_PASS = "***REMOVED***"
 
-    client.sendall(message.encode("utf-8"))
+        self.connections = []
 
-def broadcast(message):
-    
-    for user in connections:
-        direct_message(user[1], message)
 
-def handle_client(client):
-    
-    while True:
-        username = client.recv(2048).decode("utf-8")
+    def listening(self):
         
-        # New user
-        if username != "":
-            connections.append((username, client))
-            prompt_message = "SERVER~" + f"{username} has joined the chat"
-            broadcast(prompt_message)
-            break
+        while True:
+            message = self.client.recv(2048).decode("utf-8")#
 
-        else:
-            client.send("Username empty".encode("utf-8"))
+            if message != "":
+                self.message = self.username + "~" + message
+                self.broadcast()
 
-    thread = threading.Thread(target=listening, args=(client, username))
-    thread.start()
+            else:
+                print(f"Message recieved from {self.username} is empty")
+            
+    def direct_message(self):
 
-def main():
+        self.user.sendall(self.message.encode("utf-8"))
 
-    server = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-    
-    try:
-        server.bind((HOST, PORT))
-        print(f"Running on {HOST}:{PORT}")
+    def broadcast(self):
+        
+        for user in self.connections:
+            self.user = user[1]
+            self.direct_message()
 
-    except socket.error as msg:
-        print('Bind failed. Error Code : ' + str(msg[0]) + ' Message ' + msg[1])
+    def handle_client(self):
+        
+        while True:
+            self.username = self.client.recv(2048).decode("utf-8")
+            
+            # New user
+            if self.username != "":
+                self.connections.append((self.username, self.client))
+                self.message = "SERVER~" + f"{self.username} has joined the chat"
+                self.broadcast()
+                break
 
-    server.listen()
+            else:
+                self.client.send("Username empty".encode("utf-8"))
 
-    while True:
-        client, address = server.accept()
-        print(f"Connected to {address}")
-        thread = threading.Thread(target=handle_client, args=(client,))
+        thread = threading.Thread(target=self.listening)
         thread.start()
-        print(f"Active connections {threading.activeCount() - 1}")
+
+    def main(self):
+
+        server = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+        
+        try:
+            server.bind((self.HOST, self.PORT))
+            print(f"Running on {self.HOST}:{self.PORT}")
+
+        except socket.error as msg:
+            print('Bind failed. Error Code : ' + str(msg[0]) + ' Message ' + msg[1])
+
+        server.listen()
+
+        while True:
+            self.client, address = server.accept()
+            print(f"Connected to {address}")
+            thread = threading.Thread(target=self.handle_client)
+            thread.start()
+            print(f"Active connections {threading.activeCount() - 1}")
 
 if __name__ == "__main__":
-    main()
+    m = process()
+    m.main()
