@@ -1,10 +1,16 @@
 # Importing Modules
 import socket
 import threading
+from dotenv import load_dotenv
+from os import getenv
 
 # Server processing class
 class process:
     def __init__(self):
+        
+        load_dotenv()
+
+        # Server details
         self.HOST = "127.0.0.1"
         self.PORT = 1234
         
@@ -12,7 +18,7 @@ class process:
         self.DB_HOST = "localhost"
         self.DB = "rsa_pychat"
         self.DB_USER = "rsa_pychat"
-        self.DB_PASS = "***REMOVED***"
+        self.DB_PASS = getenv("DBPASS")
 
         self.connections = []
 
