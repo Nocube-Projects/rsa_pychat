@@ -20,7 +20,7 @@ jobs:
       run:
         docker login -u cl107 -p $DOCKER_PASSWORD
     - name: Build the Docker image
-      run: docker build . --file Dockerfile --tag cl107/rsa_pychat_server:$(date +%s)
+      run: docker build . --file Dockerfile --tag cl107/rsa_pychat_server:$(date +%h)
       
     - name: Docker Push
-      run: docker push cl107/rsa_pychat_server
+      run: docker push cl107/rsa_pychat_server:$(date +%h)
