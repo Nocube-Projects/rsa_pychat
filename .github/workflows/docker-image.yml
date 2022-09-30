@@ -23,4 +23,4 @@ jobs:
       run: docker build . --file Dockerfile --tag cl107/rsa_pychat_server:latest
       
     - name: Docker Push
-      run: docker push cl107/rsa_pychat_server
+      run: docker push cl107/rsa_pychat_server:latest
