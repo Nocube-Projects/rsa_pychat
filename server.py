@@ -11,7 +11,7 @@ class process:
         load_dotenv()
 
         # Server details
-        self.HOST = "185.215.180.30"
+        self.HOST = "0.0.0.0"
         self.PORT = 1234
         
         # DB details
