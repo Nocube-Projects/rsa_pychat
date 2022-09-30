@@ -14,5 +14,13 @@ jobs:
 
     steps:
     - uses: actions/checkout@v3
+    - name: Docker Login
+      env:
+        DOCKER_PASSWORD: ${{secrets.DOCKER_PASSWORD}}
+      run:
+        docker login -u cl107 -p $DOCKER_PASSWORD
     - name: Build the Docker image
-      run: docker build . --file Dockerfile --tag rsa_pychat_server:$(date +%s)
+      run: docker build . --file Dockerfile --tag cl107/rsa_pychat_server:$(date +%s)
+      
+    - name: Docker Push
+      run: docker push cl107/rsa_pychat_server
