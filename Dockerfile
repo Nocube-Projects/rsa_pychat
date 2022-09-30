@@ -8,7 +8,7 @@ LABEL maintainer="Dockerfile created by CL107 <https://github.com/CL107>"
 RUN apk update \
 && apk upgrade \
 && apk add python3 \
-&& apk add python3-pip \
+&& apk add py3-pip \
 && pip3 install python-dotenv
 
 ### 4. Copy requirements.txt
