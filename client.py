@@ -52,9 +52,11 @@ class menu:
 
     # Listens for messages from the server
     def listening(self):
-        
         while True:
             message = self.client.recv(2048).decode("utf-8")
+
+            while "`,#" not in message:
+                message += self.client.recv(2048).decode("utf-8")
 
             if message != "":
                 username = message.split("~")[0]
@@ -71,6 +73,7 @@ class menu:
             message = input("")
 
             if message != "":
+                message += "`,#"
                 self.client.sendall(message.encode("utf-8"))
 
             else:

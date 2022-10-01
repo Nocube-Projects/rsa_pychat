@@ -36,7 +36,7 @@ class process:
                 print(f"Message recieved from {self.username} is empty")
             
     def direct_message(self):
-
+        self.message += "`,#"
         self.client.sendall(self.message.encode("utf-8"))
 
     def broadcast(self):
