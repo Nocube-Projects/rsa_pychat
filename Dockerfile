@@ -1,4 +1,4 @@
-### 1. Get Linux
+### 1. Get Alpine Linux
 FROM alpine:latest
 
 ### 2. Label
@@ -11,14 +11,14 @@ RUN apk update \
 && apk add py3-pip \
 && pip3 install python-dotenv
 
-### 4. Copy requirements.txt
+### 4. Copy server files
 COPY ./server.py /rsa_pychat/server.py
 
-### 5. Expose web ui port
+### 5. Expose socket
 EXPOSE 1234
 
 ### 6. Set working directory
 WORKDIR /rsa_pychat
 
-### 7. Start crafty
+### 7. Start rsa_pychat server
 CMD ["python3", "server.py"]
