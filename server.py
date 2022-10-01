@@ -26,7 +26,7 @@ class process:
     def listening(self):
         
         while True:
-            message = self.client.recv(2048).decode("utf-8")#
+            message = self.client.recv(2048).decode("utf-8")
 
             if message != "":
                 self.message = self.username + "~" + message
@@ -37,12 +37,12 @@ class process:
             
     def direct_message(self):
 
-        self.user.sendall(self.message.encode("utf-8"))
+        self.client.sendall(self.message.encode("utf-8"))
 
     def broadcast(self):
         
         for user in self.connections:
-            self.user = user[1]
+            self.client = user[1]
             self.direct_message()
 
     def handle_client(self):
