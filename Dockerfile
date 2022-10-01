@@ -21,4 +21,4 @@ EXPOSE 1234
 WORKDIR /rsa_pychat
 
 ### 7. Start rsa_pychat server
-CMD ["python3", "server.py"]
+CMD ["python3", "-u", "server.py"]
